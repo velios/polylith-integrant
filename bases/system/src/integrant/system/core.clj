@@ -4,7 +4,8 @@
   (:require [clojure.pprint :as pp]
             [clojure.tools.logging :as log]
             [integrant.core :as ig]
-            [integrant.system.state :as state])
+            [integrant.system.state :as state]
+            [integrant.workload.interface :as workload])
   (:gen-class) ;; без этого не захотело jar'ку собирать
   )
 
@@ -30,31 +31,36 @@
    :integrant.system/embedded-pg {:config (ig/ref :integrant.system/config)
                                   #_#_:log-file "path/to/pg-logs-redirection"}
    :integrant.system/data-source {:config   (ig/ref :integrant.system/config)
-                                  :postgres (ig/ref :integrant.system/embedded-pg)}})
+                                  :postgres (ig/ref :integrant.system/embedded-pg)}
+   :integrant.workload.integrant/workload {}
+   :integrant.executor.integrant/executor {:workload-record (ig/ref :integrant.workload.integrant/workload)}})
+
+(def test-ig-config
+  {:integrant.system/config      {}
+   :integrant.system/embedded-pg {:config (ig/ref :integrant.system/config)
+                                  #_#_:log-file "path/to/pg-logs-redirection"}
+   :integrant.system/data-source {:config   (ig/ref :integrant.system/config)
+                                  :postgres (ig/ref :integrant.system/embedded-pg)}
+   :integrant.workload.integrant.test/workload {}
+   :integrant.executor.integrant/executor {:workload-record (ig/ref :integrant.workload.integrant.test/workload)}})
 
 (defn halt-system! []
   (state/stop!)
   ::stopped)
 
-(defn workload
-  []
-  (println "Hi"))
-
 (defn init-system!
-  ([]
-   (init-system! default-ig-config))
-  ([ig-config]
-   (log/info "Starting system with config:\n"
-             (with-out-str (pp/pprint ig-config)))
-   (try
-     (halt-system!)
-     (state/start! ig-config)
-     (workload)
-     ::started
-     (catch Exception ex
-       (log/error ex "Failed to start the system")
-       (halt-system!)
-       ::failed-to-start))))
+  [config-name]
+  (let [ig-config (eval (symbol (str "integrant.system.core/" config-name)))]
+    (log/info "Starting system with config:\n"
+              (with-out-str (pp/pprint ig-config)))
+    (try
+      (halt-system!)
+      (state/start! ig-config)
+      ::started
+      (catch Exception ex
+        (log/error ex "Failed to start the system")
+        (halt-system!)
+        ::failed-to-start))))
 
 ;; Base API
 
@@ -69,10 +75,10 @@
     halt-res))
 
 (defn launch!
-  []
+  [config-name]
   (.addShutdownHook (Runtime/getRuntime) (Thread. shutdown!))
-  (init-system!))
+  (init-system! config-name))
 
 (defn -main
-  [& _]
-  (launch!))
+  [& [config-name]]
+  (launch! (or config-name "default-ig-config")))

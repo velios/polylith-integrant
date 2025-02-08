@@ -5,15 +5,17 @@
                                 poly+integrant/config                     {:local/root "components/config"}
                                 poly+integrant/embedded-pg                {:local/root "components/embedded-pg"}
                                 poly+integrant/pg-ops                     {:local/root "components/pg-ops"}
+                                poly+integrant/workload                   {:local/root "components/workload"}
+                                poly+integrant/executor                   {:local/root "components/executor"}
 
                                 integrant/repl                            {:mvn/version "0.3.3"}
 
                                 org.clojure/clojure                       {:mvn/version "1.11.1"}
                                 org.clojure/tools.logging                 {:mvn/version "1.2.4"}
 
-                                org.apache.logging.log4j/log4j-api        {:mvn/version "2.23.1"}
-                                org.apache.logging.log4j/log4j-core       {:mvn/version "2.23.1"}
-                                org.apache.logging.log4j/log4j-slf4j-impl {:mvn/version "2.23.1"}}}
+                                org.slf4j/slf4j-nop {:mvn/version "2.0.3"}
+                                ;;ch.qos.logback/logback-classic {:mvn/version "1.5.12"}
+                                }}
 
            :test {:extra-paths ["bases/system/test"]}
 

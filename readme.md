@@ -31,6 +31,16 @@ The minimal set of system components:
 | DataSource    | n/a           | `:integrant.system/data-source` | A "stateful" component which is only required at runtime (to be started and stopped properly), i.e. lacks a Polylith counterpart.                                                         |
 | DB Operations | `pg-ops`      | n/a                             | A regular "stateless" component whose methods are parametrized by the required system state (e.g. `data-source`) or its derivatives.                                                      |
 
+### Run the Application
+
+You can run the application from the root of the workspace:
+
+```
+clojure -M:dev -m integrant.system.core
+;; or for run with "test" implementation
+clojure -M:dev -m integrant.system.core test-ig-config
+```
+
 ### Run the tests with:
 
 ```
