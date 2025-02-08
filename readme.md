@@ -30,3 +30,27 @@ The minimal set of system components:
 | Embedded DB   | `embedded-pg` | `:integrant.system/embedded-pg` | A "stateful" component which should be divided into two parts along the boundary between the component and the Integrant system that merely prepares arguments and calls its methods.     |
 | DataSource    | n/a           | `:integrant.system/data-source` | A "stateful" component which is only required at runtime (to be started and stopped properly), i.e. lacks a Polylith counterpart.                                                         |
 | DB Operations | `pg-ops`      | n/a                             | A regular "stateless" component whose methods are parametrized by the required system state (e.g. `data-source`) or its derivatives.                                                      |
+
+### Run the tests with:
+
+```
+poly test
+```
+
+## Build an Uberjar
+
+For production deployment, you typically want to build an "uberjar" -- a `.jar` file that contains Clojure itself and all of the code from your application and its dependencies, so that you can run it with the `java -jar` command.
+
+```
+cd projects/system-first && clj -T:build uber
+;; or
+cd projects/system-second && clj -T:build uber
+```
+
+It will also include the standalone `.jar` file which you can run like this:
+
+```
+java -jar projects/target/systemfirst-standalone.jar
+;; or
+java -jar projects/target/systemsecond-standalone.jar
+```

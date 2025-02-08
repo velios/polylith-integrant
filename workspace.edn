@@ -7,4 +7,5 @@
  :tag-patterns         {:stable  "stable-*"
                         :release "v[0-9]*"}
  :projects             {"development" {:alias "dev"}
-                        "system-first" {:alias "sf"}}}
+                        "system-first" {:alias "sf"}
+                        "system-second" {:alias "ss"}}}

@@ -1,0 +1,12 @@
+{:deps {polylith-integrant/config {:local/root "../../components/config"}
+        polylith-integrant/embedded-pg {:local/root "../../components/embedded-pg"}
+        polylith-integrant/pg-ops {:local/root "../../components/pg-ops"}
+        polylith-integrant/system {:local/root "../../bases/system"}
+
+        org.clojure/clojure {:mvn/version "1.11.1"}}
+
+ :aliases {:test {:extra-paths []
+                  :extra-deps  {}}
+
+           :build {:replace-deps {io.github.clojure/tools.build {:mvn/version "0.10.0"}}
+                   :ns-default build}}}
