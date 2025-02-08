@@ -1,0 +1,24 @@
+{:deps {polylith-integrant/config {:local/root "../../components/config"}
+        polylith-integrant/embedded-pg {:local/root "../../components/embedded-pg"}
+        polylith-integrant/pg-ops {:local/root "../../components/pg-ops"}
+        polylith-integrant/system {:local/root "../../bases/system"}
+
+        ;; Имплементация логирования для org.clojure/tools.logging из base/system
+        ;; для "production" usage
+        ch.qos.logback/logback-classic {:mvn/version "1.5.12"}
+
+        org.clojure/clojure {:mvn/version "1.11.1"}}
+
+ :aliases {:test {:extra-paths []
+                  ;; не знаю лучший ли это способ исключить зависимость, но брал отсюда
+                  ;; https://flow-storm.github.io/flow-storm-debugger/user_guide.html#_setup_with_deps_edn
+                  ;; NOTE! Не знаю почему, но :classpath-overrides никак не влияет, slf4j-nop перетирает logback-classic,
+                  ;; но если убрать slf4j-nop будет logback отрабатывать, хотя я и сказал его выкинуть
+                  :classpath-overrides {ch.qos.logback/logback-classic nil}
+                  :extra-deps  {
+                                org.slf4j/slf4j-nop {:mvn/version "2.0.3"}
+                                }
+                  }
+
+           :build {:replace-deps {io.github.clojure/tools.build {:mvn/version "0.10.0"}}
+                   :ns-default build}}}

@@ -4,7 +4,9 @@
   (:require [clojure.pprint :as pp]
             [clojure.tools.logging :as log]
             [integrant.core :as ig]
-            [integrant.system.state :as state]))
+            [integrant.system.state :as state])
+  (:gen-class) ;; без этого не захотело jar'ку собирать
+  )
 
 ;; Integrant System
 
@@ -34,6 +36,10 @@
   (state/stop!)
   ::stopped)
 
+(defn workload
+  []
+  (println "Hi"))
+
 (defn init-system!
   ([]
    (init-system! default-ig-config))
@@ -43,6 +49,7 @@
    (try
      (halt-system!)
      (state/start! ig-config)
+     (workload)
      ::started
      (catch Exception ex
        (log/error ex "Failed to start the system")
