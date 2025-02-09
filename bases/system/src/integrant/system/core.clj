@@ -32,7 +32,7 @@
                                   #_#_:log-file "path/to/pg-logs-redirection"}
    :integrant.system/data-source {:config   (ig/ref :integrant.system/config)
                                   :postgres (ig/ref :integrant.system/embedded-pg)}
-   :integrant.workload.integrant/workload {}
+   :integrant.workload.integrant/workload {:print-base "prod"}
    :integrant.executor.integrant/executor {:workload-record (ig/ref :integrant.workload.integrant/workload)}})
 
 (def test-ig-config

@@ -11,7 +11,7 @@
 
 (defmethod ig/init-key :integrant.workload.integrant.test/workload
   [_ _]
-  (->WorkloadImp))
+  (map->WorkloadImp {}))
 
 (defmethod ig/halt-key! :integrant.workload.integrant.test/workload
   [_ _]

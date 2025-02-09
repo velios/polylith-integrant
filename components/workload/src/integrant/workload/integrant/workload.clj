@@ -3,15 +3,16 @@
     [integrant.core :as ig]
     [integrant.workload.protocol :as protocol]))
 
-(defrecord WorkloadImp []
+(defrecord WorkloadImp
+  [print-base]
   protocol/Workload
 
   (write-text [_this text]
-    (println "prod -> " text)))
+    (println print-base" -> " text)))
 
 (defmethod ig/init-key :integrant.workload.integrant/workload
-  [_ _]
-  (->WorkloadImp))
+  [_ {:keys [print-base]}]
+  (map->WorkloadImp {:print-base print-base}))
 
 (defmethod ig/halt-key! :integrant.workload.integrant/workload
   [_ _]
