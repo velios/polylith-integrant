@@ -3,6 +3,5 @@
 
 (defn make-some-work
   [some-work-fn]
-  (println "Some work from prod workload")
-  (log/info "Some work from prod workload")
+  (log/info "Some work from mock workload")
   (some-work-fn))

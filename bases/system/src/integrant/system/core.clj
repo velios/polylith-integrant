@@ -4,7 +4,8 @@
   (:require [clojure.pprint :as pp]
             [clojure.tools.logging :as log]
             [integrant.core :as ig]
-            [integrant.system.state :as state]))
+            [integrant.system.state :as state]
+            [integrant.workload.interface :as workload]))
 
 ;; Integrant System
 
@@ -42,6 +43,7 @@
              (with-out-str (pp/pprint ig-config)))
    (try
      (halt-system!)
+     (workload/make-some-work #(println "some work happened"))
      (state/start! ig-config)
      ::started
      (catch Exception ex

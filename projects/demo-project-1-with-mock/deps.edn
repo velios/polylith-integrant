@@ -1,8 +1,12 @@
-{:deps {poly+integrant/system                     {:local/root "../../bases/system"}
+{:paths ["resources"]
+
+ :deps {poly+integrant/system                     {:local/root "../../bases/system"}
         poly+integrant/config                     {:local/root "../../components/config"}
         poly+integrant/embedded-pg                {:local/root "../../components/embedded-pg"}
         poly+integrant/pg-ops                     {:local/root "../../components/pg-ops"}
         poly+integrant/workload-mock              {:local/root "../../components/workload-mock"}
+
+        ch.qos.logback/logback-classic {:mvn/version "1.5.12"}
 
         org.clojure/clojure {:mvn/version "1.11.1"}}
 

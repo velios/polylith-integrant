@@ -4,6 +4,8 @@
         poly+integrant/pg-ops                     {:local/root "../../components/pg-ops"}
         poly+integrant/workload                   {:local/root "../../components/workload"}
 
+        ch.qos.logback/logback-classic {:mvn/version "1.5.12"}
+
         org.clojure/clojure {:mvn/version "1.11.1"}}
 
  :aliases {:test {:extra-paths []
