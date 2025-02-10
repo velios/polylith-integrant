@@ -15,10 +15,16 @@
                                 org.apache.logging.log4j/log4j-core       {:mvn/version "2.23.1"}
                                 org.apache.logging.log4j/log4j-slf4j-impl {:mvn/version "2.23.1"}}}
 
+           :+default {:extra-deps {poly/user {:local/root "components/workload"}}
+                      :extra-paths ["components/workload/test"]}
+
+           :+mock {:extra-deps {poly/user-remote {:local/root "components/workload-mock"}}
+                   :extra-paths ["components/workload-mock/test"]}
+
            :test {:extra-paths ["bases/system/test"
                                 "components/config/test"
-                                "components/components/embedded-pg"
-                                "components/components/pg-ops"]}
+                                "components/embedded-pg/test"
+                                "components/pg-ops/test"]}
 
            :poly {:main-opts  ["-m" "polylith.clj.core.poly-cli.core"]
                   :extra-deps {polylith/clj-poly {:mvn/version "0.2.18"}}}}}
